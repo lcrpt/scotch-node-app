@@ -19,6 +19,7 @@
   "homepage": "https://github.com/leolassence/scotch-node-app#readme",
   "dependencies": {
     "dotenv": "^2.0.0",
+    "ejs": "^2.5.2",
     "express": "^4.14.0",
     "lokijs": "^1.4.1",
     "nodemon": "^1.11.0",
