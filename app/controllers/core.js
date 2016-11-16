@@ -1,6 +1,7 @@
 'use strict';
 
 const db = require('../util/db');
+const client = require('../util/twitter');
 
 exports.home = (req, res) => {
   db.loadDatabase({}, () => {
@@ -13,3 +14,18 @@ exports.top = (req, res) => {
     res.render('top', { terms: db.getCollection('top').data });
   });
 };
+
+exports.results = (req, res) => {
+  const query = req.query.q;
+
+  if (query) {
+    db.getCollection('searches').insert({ term: query });
+    db.saveDatabase();
+
+    client.get('search/tweets', { q: query }, (error, tweets, response) => {
+      res.render('results', { query, tweets: tweets.statuses });
+    })
+  } else {
+    res.send('Error');
+  }
+}
